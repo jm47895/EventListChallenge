@@ -1,8 +1,11 @@
-package com.jordanmadrigal.event
+package com.jordanmadrigal.event.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jordanmadrigal.event.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

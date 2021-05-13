@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventListChallenge">
-        <activity android:name=".EventActivity">
+        <activity android:name=".ui.EventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
