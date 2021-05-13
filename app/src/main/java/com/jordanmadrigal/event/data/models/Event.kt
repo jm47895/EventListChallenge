@@ -4,11 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import java.util.*
 
 
 @Entity(tableName = "event_table")
 data class Event(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "event_id") var eventId : Long = 0,
+    @PrimaryKey @ColumnInfo(name = "event_id") var eventId : String,
 
     @field:Json(name = "name")
     @ColumnInfo(name = "name")

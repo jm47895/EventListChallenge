@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EventDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertEvent(event: Event): Long
 
 
     @Query("SELECT * FROM event_table")
-    fun getAllEvents(): Flow<Event>
+    fun getAllEvents(): Flow<List<Event>>
 
 }

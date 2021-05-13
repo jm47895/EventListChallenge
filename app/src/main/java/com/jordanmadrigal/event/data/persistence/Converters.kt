@@ -3,6 +3,7 @@ package com.jordanmadrigal.event.data.persistence
 import androidx.room.TypeConverter
 import com.jordanmadrigal.event.data.models.Venue
 import com.squareup.moshi.Moshi
+import java.util.*
 
 class Converters {
 
@@ -17,5 +18,4 @@ class Converters {
         val moshi = Moshi.Builder().build()
         return moshi.adapter(Venue::class.java).fromJson(json)
     }
-
 }

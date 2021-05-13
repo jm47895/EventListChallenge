@@ -2,7 +2,6 @@ package com.jordanmadrigal.event.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +34,7 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
     }
 
     private fun requestEventsFromDb() {
-        eventViewModel.requestEventListFromDb()
+        eventViewModel.requestEventListFromDb(this)
     }
 
     private fun setupObservers() {
@@ -48,9 +47,10 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
             }
         })
 
-        eventViewModel.getEventList().observe(this, Observer { eventData ->
-            eventListAdapter.submitList(eventData)
+        eventViewModel.getEventList().observe(this, Observer { eventListData ->
+            eventListAdapter.submitList(eventListData)
         })
+
     }
 
     private fun initRecyclerView(){

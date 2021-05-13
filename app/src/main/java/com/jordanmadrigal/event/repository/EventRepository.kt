@@ -6,10 +6,12 @@ import com.jordanmadrigal.event.data.api.EventService
 import com.jordanmadrigal.event.data.models.Event
 import com.jordanmadrigal.event.data.models.EventList
 import com.jordanmadrigal.event.data.persistence.EventDatabase
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.util.*
 import javax.inject.Inject
 
 class EventRepository @Inject constructor(
@@ -22,6 +24,10 @@ class EventRepository @Inject constructor(
 
     suspend fun insertEventIntoEventCache(event: Event){
         cacheDb.getEventDao().insertEvent(event)
+    }
+
+    fun getEventsInCache():Flow<List<Event>>{
+        return cacheDb.getEventDao().getAllEvents()
     }
 
     fun requestEventList(){
@@ -39,7 +45,7 @@ class EventRepository @Inject constructor(
                     if (events != null) {
                         val eventList = mutableListOf<Event>()
                         for(event in events.eventList){
-                            eventList.add(Event(0, event.eventName, event.eventVenue, event.eventUrl, event.startDate, event.endDate, event.icon))
+                            eventList.add(Event(event.eventUrl, event.eventName, event.eventVenue, event.eventUrl, event.startDate, event.endDate, event.icon))
                         }
 
                         eventListData.value = eventList
