@@ -4,4 +4,6 @@
 
     <!--These are content descriptions-->
     <string name="this_is_an_image_of_the_event">This is an image of the event</string>
+    <string name="data_retrieved">Data Retrieved</string>
+    <string name="retrieve_data_error">We were not able to retrieve the data</string>
 </resources>

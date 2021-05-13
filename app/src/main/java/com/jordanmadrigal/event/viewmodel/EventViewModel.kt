@@ -1,7 +1,6 @@
 package com.jordanmadrigal.event.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.jordanmadrigal.event.data.persistence.EventDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import androidx.lifecycle.*
@@ -19,5 +18,17 @@ class EventViewModel @Inject constructor(
         viewModelScope.launch {
             eventRepository.insertEventIntoEventCache(event)
         }
+    }
+
+    fun requestEventListFromDb(){
+        eventRepository.requestEventList()
+    }
+
+    fun getEventList():MutableLiveData<List<Event>>{
+        return eventRepository.getEventList()
+    }
+
+    fun getRequestStatus():MutableLiveData<Boolean>{
+        return eventRepository.getRequestStatus()
     }
 }

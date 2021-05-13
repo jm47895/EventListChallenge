@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.jordanmadrigal.event.R
 import com.jordanmadrigal.event.data.models.Event
 import com.jordanmadrigal.event.databinding.EventListItemBinding
@@ -42,7 +45,7 @@ class EventListAdapter(private val interaction: Interaction? = null) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EventViewHolder -> {
-                holder.bind(differ.currentList.get(position))
+                holder.bind(differ.currentList[position])
             }
         }
     }
@@ -66,6 +69,16 @@ class EventListAdapter(private val interaction: Interaction? = null) :
             itemView.setOnClickListener {
                 interaction?.onItemSelected(adapterPosition, item)
             }
+
+            Glide.with(itemView)
+                .applyDefaultRequestOptions(
+                    RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .circleCrop()
+                )
+                .load(item.icon)
+                .circleCrop()
+                .into(binding.eventImgIv)
 
             binding.eventNameTv.text = item.eventName
             binding.eventDatesTv.text = item.startDate

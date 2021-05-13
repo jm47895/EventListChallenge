@@ -4,14 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jordanmadrigal.event.R
 import com.jordanmadrigal.event.data.models.Event
 import com.jordanmadrigal.event.databinding.ActivityEventBinding
 import com.jordanmadrigal.event.ui.adapters.EventListAdapter
+import com.jordanmadrigal.event.util.AndroidUtils
 import com.jordanmadrigal.event.viewmodel.EventViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
@@ -26,24 +27,30 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
         val view = binding.root
         setContentView(view)
 
+        requestEventsFromDb()
+
         initRecyclerView()
 
-        val eventsList = mutableListOf<Event>()
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
-        eventsList.add(Event(0, "Test", "Test", "Test", "Test", "Test"))
+        setupObservers()
+    }
 
-        eventListAdapter.submitList(eventsList)
+    private fun requestEventsFromDb() {
+        eventViewModel.requestEventListFromDb()
+    }
+
+    private fun setupObservers() {
+
+        eventViewModel.getRequestStatus().observe(this, Observer { isDataRetrieved->
+            if(isDataRetrieved){
+                AndroidUtils.showSnackBar(this, getString(R.string.data_retrieved))
+            }else{
+                AndroidUtils.showSnackBar(this, getString(R.string.retrieve_data_error))
+            }
+        })
+
+        eventViewModel.getEventList().observe(this, Observer { eventData ->
+            eventListAdapter.submitList(eventData)
+        })
     }
 
     private fun initRecyclerView(){
@@ -55,7 +62,7 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
     }
 
     override fun onItemSelected(position: Int, item: Event) {
-        Log.d(TAG, "Go to this url: ${item.eventUrl}")
+        AndroidUtils.showSnackBar(this, "Navigating to: ${item.eventUrl}")
     }
 
     companion object{
