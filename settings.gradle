@@ -1,0 +1,2 @@
+rootProject.name = "Event List Challenge"
+include ':app'
