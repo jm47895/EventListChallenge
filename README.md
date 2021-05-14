@@ -20,4 +20,4 @@ would have done so using Junit and Mockito.
 I would have added pagenation so as not to call the data all at once, allowing for better performance and lower aws costs.  
 
 As far as UI, I would have added a detail webview that would open the link to the event webpage. I opted for just mimicing the function by showing a snack bar that 
-shows the url to the event.  
+shows the url to the event. I also would change the colors based on the company template.  
