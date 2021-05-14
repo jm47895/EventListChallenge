@@ -11,8 +11,8 @@ based on any changes found to the remote database.
 **Challenege Improvement**
 
 I noticed that the Venue data in the remote database was empty and 
-returning null when retrieving so I didn't add that to the disply and instead 
-opted to display the photo, event name, and date only.
+returning null when retrieving so I didn't add that to the display and instead 
+opted to display the photo, event name, and end date only based on the instructions.
   
 I didn't really have time to implement tests given the time constraints but 
 would have done so using Junit and Mockito.
