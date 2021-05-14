@@ -81,7 +81,7 @@ class EventListAdapter(private val interaction: Interaction? = null) :
                 .into(binding.eventImgIv)
 
             binding.eventNameTv.text = item.eventName
-            binding.eventDatesTv.text = item.startDate
+            binding.eventDatesTv.text = item.endDate
         }
     }
 

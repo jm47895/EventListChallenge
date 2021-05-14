@@ -2,6 +2,7 @@ package com.jordanmadrigal.event.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
         val view = binding.root
         setContentView(view)
 
+        showProgressBar()
+
         requestEventsFromDb()
 
         initRecyclerView()
@@ -40,9 +43,17 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
     private fun setupObservers() {
 
         eventViewModel.getRequestStatus().observe(this, Observer { isDataRetrieved->
+
             if(isDataRetrieved){
+
+                hideProgressBar()
+
                 AndroidUtils.showSnackBar(this, getString(R.string.data_retrieved))
+
             }else{
+
+                hideProgressBar()
+
                 AndroidUtils.showSnackBar(this, getString(R.string.retrieve_data_error))
             }
         })
@@ -59,6 +70,14 @@ class EventActivity : AppCompatActivity(), EventListAdapter.Interaction{
             layoutManager = LinearLayoutManager(context)
             adapter = eventListAdapter
         }
+    }
+
+    private fun showProgressBar(){
+        binding.loadingBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar(){
+        binding.loadingBar.visibility = View.INVISIBLE
     }
 
     override fun onItemSelected(position: Int, item: Event) {
